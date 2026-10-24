@@ -1,0 +1,466 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Djazair — Algerian Heritage</title>
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<style>
+:root{--g:#174c36;--r:#c9483d;--cream:#faf7ef;--gold:#c9a66b;--ink:#25372c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font:15px Arial,sans-serif;line-height:1.65}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+header{background:var(--g);color:white;padding:16px 6%;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:5}
+.logo{font-size:28px;font-weight:bold;letter-spacing:-1px}.logo span{color:#f1c4a0}
+nav{display:flex;gap:18px;align-items:center}nav a{color:white;text-decoration:none;font-size:13px}
+.btn{background:var(--g);color:white;border:0;border-radius:6px;padding:11px 15px;font-weight:bold}
+.btn.light{background:white;color:var(--g)}.btn.red{background:var(--r)}
+.btn.outline{background:transparent;border:1px solid #ccc;color:var(--ink)}
+#menu{display:none}
+.hero{padding:65px 7%;display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:center}
+h1,h2,h3{line-height:1.2}h1{font-size:clamp(40px,6vw,70px);margin:10px 0;color:var(--g)}
+h1 em{color:var(--r)}.eyebrow{color:var(--r);text-transform:uppercase;letter-spacing:2px;font-size:11px;font-weight:bold}
+p{color:#69756b}.hero img{width:100%;height:370px;object-fit:cover;border-radius:130px 130px 8px 8px}
+section{padding:55px 7%}.shade{background:#f0ede3}
+.heading{margin-bottom:25px}.heading h2{font-size:36px;color:var(--g);margin:5px 0}
+.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin:20px 0}
+input,select,textarea{padding:11px;border:1px solid #d8d8cd;border-radius:5px;background:white;max-width:100%;width:100%}
+.toolbar input{flex:1;min-width:180px}.toolbar button{padding:9px 13px;border:1px solid #d6d3c7;background:white;border-radius:5px}
+.toolbar button.active{background:var(--g);color:white}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.card{background:white;border:1px solid #e8e4d9;border-radius:8px;overflow:hidden}
+.card img{width:100%;height:205px;object-fit:cover;background:#e6e0d3}
+.card-body{padding:17px}.tag{font-size:10px;color:var(--g);background:#e9f0e9;padding:5px 8px;border-radius:4px}
+.card h3{color:var(--g);font-size:22px;margin:13px 0 8px}
+.card p{font-size:13px;min-height:58px}.card-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}
+.card-actions button{font-size:12px;padding:8px 10px}
+.about{background:var(--g);color:white}.about p{color:#e0e8e1}.about h2{font-size:36px}
+footer{padding:30px 7%;background:#102c20;color:white}
+footer p{color:#ccd7ce;font-size:12px}
+#admin{display:none;background:white;padding:25px 6%;border-bottom:4px solid var(--gold)}
+#admin.open{display:block}
+.admin-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
+.admin-head h2{color:var(--g);margin:0}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.field{display:flex;flex-direction:column;gap:5px;font-size:12px;font-weight:bold}
+.field.full{grid-column:1/-1}
+textarea{min-height:90px;resize:vertical}
+.preview{width:100%;height:160px;object-fit:cover;background:#eee;border-radius:6px}
+.admin-actions{display:flex;gap:8px;flex-wrap:wrap;margin:17px 0}
+#notice{font-size:13px;color:var(--g);font-weight:bold;min-height:22px}
+.small{font-size:11px;color:#778176}
+.modal{display:none;position:fixed;inset:0;background:#0009;z-index:10;align-items:center;justify-content:center;padding:18px}
+.modal.open{display:flex}.modalbox{background:var(--cream);padding:25px;border-radius:9px;max-width:500px;width:100%;max-height:85vh;overflow:auto}
+.modalbox img{width:100%;max-height:250px;object-fit:cover}
+@media(max-width:760px){
+ #menu{display:block}.hero{grid-template-columns:1fr;padding:40px 6%}.hero img{height:270px}
+ nav{display:none;position:absolute;top:60px;left:0;right:0;background:var(--g);padding:15px 6%;flex-direction:column;align-items:stretch}
+ nav.open{display:flex}section{padding:40px 6%}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .admin-grid{grid-template-columns:1fr}.field.full{grid-column:auto}
+}
+@media(max-width:480px){.grid{grid-template-columns:1fr}.card img{height:230px}h1{font-size:45px}}
+</style>
+</head>
+<body>
+<header>
+  <a href="#home" class="logo" style="color:white;text-decoration:none">Djazair<span>.</span></a>
+  <button class="btn light" id="menu" aria-expanded="false">☰ Menu</button>
+  <nav id="nav">
+    <a href="#home">Home</a><a href="#collection">Explore</a>
+    <a href="#food">Cuisine</a><a href="#clothing">Clothing</a>
+    <a href="#places">Historical places</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="home">
+ <div>
+  <div class="eyebrow">A journey through Algerian culture</div>
+  <h1>Discover<br>our <em>Djazair.</em></h1>
+  <p>Explore Algeria's traditional cuisine, festive sweets, clothing and extraordinary historical heritage. Every region has a story to share.</p>
+  <a class="btn" href="#collection" style="display:inline-block;text-decoration:none">Explore the collection ↗</a>
+  <p class="small">Culture · History · Identity · Algeria 🇩🇿</p>
+ </div>
+ <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1100&q=85" alt="Mountain landscape">
+</section>
+
+<section class="shade" id="collection">
+ <div class="heading"><div class="eyebrow">The cultural collection</div><h2>Explore Algerian heritage</h2><p>Search, filter and select an item to learn more.</p></div>
+ <div class="toolbar">
+  <input id="search" placeholder="Search dishes, clothing or places..." aria-label="Search">
+  <button class="active" data-filter="all">All</button>
+  <button data-filter="food">Food</button>
+  <button data-filter="sweet">Sweets</button>
+  <button data-filter="clothing">Clothing</button>
+  <button data-filter="heritage">Heritage</button>
+ </div>
+ <div class="grid" id="cards"></div>
+</section>
+
+<section id="food">
+ <div class="heading"><div class="eyebrow">From our kitchens</div><h2>Food & traditional sweets</h2><p>Discover dishes and pastries prepared differently across Algeria.</p></div>
+ <div class="grid" id="foodCards"></div>
+</section>
+
+<section class="shade" id="clothing">
+ <div class="heading"><div class="eyebrow">Craftsmanship & identity</div><h2>Traditional clothing</h2><p>Explore garments connected to different Algerian regions and occasions.</p></div>
+ <div class="grid" id="clothingCards"></div>
+</section>
+
+<section id="places">
+ <div class="heading"><div class="eyebrow">History carved in stone</div><h2>Historical places</h2><p>Explore ancient cities, historic neighbourhoods and Saharan architecture.</p></div>
+ <div class="grid" id="placeCards"></div>
+ <p class="small">For verified heritage designations, consult the <a href="https://whc.unesco.org/en/statesparties/dz/" target="_blank" rel="noopener">UNESCO Algeria listings</a>.</p>
+</section>
+
+<section class="about">
+ <div class="eyebrow" style="color:#e6c78e">Our heritage, our pride</div>
+ <h2>Tradition lives through us.</h2>
+ <p>Djazair celebrates the knowledge, creativity and memories passed between generations. Help keep these traditions visible by adding your own photos and regional stories.</p>
+ <a class="btn light" href="#collection" style="display:inline-block;text-decoration:none">Explore the collection ↗</a>
+</section>
+</main>
+
+<section id="admin">
+ <div class="admin-head">
+  <div><div class="eyebrow">Website control centre</div><h2>⚙ Djazair Admin Panel</h2></div>
+  <button class="btn outline" id="closeAdmin">Close panel ✕</button>
+ </div>
+ <div id="loginForm" class="shade" style="padding:18px;border-radius:12px;margin:16px 0">
+  <h3>Admin login</h3>
+  <p>Sign in with the email and password for your authorized Supabase admin account.</p>
+  <div class="admin-grid">
+   <label class="field">Email<input id="adminEmail" type="email" autocomplete="username" placeholder="Your admin email" required></label>
+   <label class="field">Password<input id="adminPassword" type="password" autocomplete="current-password" placeholder="Your password" required></label>
+  </div>
+  <div class="admin-actions">
+   <button class="btn" id="loginButton" type="button">Log in</button>
+   <button class="btn outline" id="logoutButton" type="button" hidden>Log out</button>
+  </div>
+  <p id="authStatus" role="status" aria-live="polite"></p>
+ </div>
+ <div id="adminTools" hidden>
+ <p>Edit your website below. Select an existing item to edit it, or create a new one.</p>
+ <div class="toolbar">
+  <button class="btn" id="newItem">＋ Add new item</button>
+  <button class="btn" id="saveAll">💾 Save changes</button>
+  <button class="btn outline" id="exportData">⬇ Export backup</button>
+  <button class="btn outline" id="importButton">⬆ Import backup</button>
+  <input id="importFile" type="file" accept=".json,application/json" hidden>
+  <button class="btn outline" id="resetData">Reset to original content</button>
+ </div>
+ <p id="notice" role="status" aria-live="polite"></p>
+ <div class="admin-grid">
+  <label class="field">Item name<input id="fName" placeholder="e.g. Couscous"></label>
+  <label class="field">Category<select id="fCategory"><option value="food">Traditional food</option><option value="sweet">Traditional sweets</option><option value="clothing">Traditional clothing</option><option value="heritage">Historical place</option></select></label>
+  <label class="field">Region<input id="fRegion" placeholder="e.g. Oran, western Algeria"></label>
+  <label class="field">Image URL<input id="fImage" placeholder="https://... or upload a picture below"></label>
+  <label class="field full">Upload picture from your computer<input id="fUpload" type="file" accept="image/*"><span class="small">Images upload to your Supabase Storage bucket when you save.</span></label>
+  <img id="preview" class="preview field full" alt="Image preview" style="display:none">
+  <label class="field full">Short description<textarea id="fDescription" placeholder="Short text displayed on the card"></textarea></label>
+  <label class="field full">Full details<textarea id="fDetail" placeholder="More information shown when visitors click Learn more"></textarea></label>
+ </div>
+ <div class="admin-actions">
+  <button class="btn" id="applyItem">Add item</button>
+  <button class="btn outline" id="clearForm">Clear form</button>
+  <button class="btn red" id="deleteItem" disabled>Delete selected item</button>
+ </div>
+ <h3>Manage existing items</h3>
+ <div class="toolbar"><input id="adminSearch" placeholder="Find an item to edit..."></div>
+ <div class="grid" id="adminCards"></div>
+ </div>
+</section>
+
+<footer>
+ <div class="logo">Djazair<span>.</span></div>
+ <p>Celebrating Algeria's living culture and heritage.</p>
+ <p>© <span id="year"></span> Djazair</p>
+</footer>
+
+<div class="modal" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+ <div class="modalbox">
+  <button class="btn outline" style="float:right" id="closeDetail">Close ✕</button>
+  <div style="clear:both"></div>
+  <img id="detailImage" alt="">
+  <div class="eyebrow" id="detailCategory"></div>
+  <h2 id="detailTitle"></h2><p id="detailText"></p><p class="small" id="detailRegion"></p>
+ </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/*
+  SETUP REQUIRED:
+  1) Paste your Supabase Project URL and Publishable key below.
+  2) Create a public Storage bucket named "djazair-images" and apply the policies
+     in the accompanying SQL setup file.
+  3) Ensure your Supabase user is listed in public.djazair_admins.
+*/
+const SUPABASE_URL = "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE";
+const SUPABASE_PUBLISHABLE_KEY = "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE";
+const IMAGE_BUCKET = "djazair-images";
+
+const labels = {food:"Traditional food", cakes:"Traditional sweets", clothing:"Traditional clothing", history:"Historical places"};
+const categoryToDb = {food:"food", sweet:"cakes", cakes:"cakes", clothing:"clothing", heritage:"history", history:"history"};
+const categoryFromDb = {food:"food", cakes:"sweet", clothing:"clothing", history:"heritage"};
+let supabaseClient = null;
+let items = [];
+let selectedId = null;
+let currentSession = null;
+let isAdmin = false;
+let uploadFile = null;
+let currentImageUrl = "";
+
+const $ = id => document.getElementById(id);
+function notice(message) { $("notice").textContent = message; }
+function status(message) { $("authStatus").textContent = message; }
+function esc(s="") {
+  return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function readyConfig() {
+  return SUPABASE_URL.startsWith("https://") &&
+    !SUPABASE_URL.includes("PASTE_") &&
+    SUPABASE_PUBLISHABLE_KEY.length > 20 &&
+    !SUPABASE_PUBLISHABLE_KEY.includes("PASTE_");
+}
+function dbCategory(category) { return categoryToDb[category] || category; }
+function uiCategory(category) { return categoryFromDb[category] || category; }
+function normalize(row) {
+  return {
+    id: row.id, name: row.title || "", category: uiCategory(row.category),
+    region: row.region || "Algeria", image: row.image_url || "",
+    description: row.description || "", detail: row.detail || "",
+    published: row.published !== false
+  };
+}
+function imageHTML(item) {
+  return item.image
+    ? `<img loading="lazy" src="${esc(item.image)}" alt="${esc(item.name)}" onerror="this.style.opacity='.15'">`
+    : `<div style="height:205px;display:grid;place-items:center;color:#657368;background:#eee9dd">No photo yet</div>`;
+}
+function card(item, admin=false) {
+  return `<article class="card">${imageHTML(item)}<div class="card-body">
+    <span class="tag">${esc(labels[dbCategory(item.category)] || item.category)}</span>
+    <h3>${esc(item.name)}</h3><p>${esc(item.description)}</p>
+    <div class="small">📍 ${esc(item.region || "Algeria")}</div>
+    <div class="card-actions">${admin
+      ? `<button class="btn" data-edit="${esc(item.id)}">✎ Edit</button><button class="btn outline" data-delete="${esc(item.id)}">Delete</button>`
+      : `<button class="btn" data-detail="${esc(item.id)}">Learn more ↗</button>`}
+    </div></div></article>`;
+}
+function render() {
+  const q = $("search").value.toLowerCase().trim();
+  const f = document.querySelector(".toolbar [data-filter].active")?.dataset.filter || "all";
+  const match = items.filter(x => (f === "all" || x.category === f) &&
+    [x.name,x.region,x.description,x.detail].join(" ").toLowerCase().includes(q));
+  $("cards").innerHTML = match.map(x => card(x)).join("") || "<p>No published items found yet.</p>";
+  const by = c => items.filter(x => x.category === c).map(x => card(x)).join("") || "<p>No published items yet.</p>";
+  $("foodCards").innerHTML = items.filter(x => ["food","sweet"].includes(x.category)).map(x => card(x)).join("") || "<p>No published items yet.</p>";
+  $("clothingCards").innerHTML = by("clothing");
+  $("placeCards").innerHTML = by("heritage");
+  const aq = $("adminSearch").value.toLowerCase().trim();
+  $("adminCards").innerHTML = isAdmin
+    ? items.filter(x => [x.name,x.region].join(" ").toLowerCase().includes(aq)).map(x => card(x,true)).join("") || "<p>No items yet. Add your first item above.</p>"
+    : "";
+}
+async function loadPublicItems() {
+  if (!supabaseClient) return;
+  const { data, error } = await supabaseClient.from("djazair_items")
+    .select("id,title,category,description,image_url,published,created_at,region,detail")
+    .eq("published", true).order("created_at", {ascending:false});
+  if (error) { console.error(error); notice("Could not load the collection. Check the Supabase setup and table permissions."); return; }
+  items = (data || []).map(normalize);
+  render();
+}
+async function loadAdminItems() {
+  const { data, error } = await supabaseClient.from("djazair_items")
+    .select("id,title,category,description,image_url,published,created_at,region,detail")
+    .order("created_at", {ascending:false});
+  if (error) { notice("Could not load admin items. Check your admin row and RLS policies."); console.error(error); return false; }
+  items = (data || []).map(normalize);
+  render();
+  return true;
+}
+function setSignedInUI(signedIn) {
+  $("loginForm").hidden = signedIn;
+  $("loginButton").hidden = signedIn;
+  $("logoutButton").hidden = !signedIn;
+  $("adminTools").hidden = !signedIn || !isAdmin;
+}
+async function checkSession() {
+  if (!supabaseClient) return;
+  const { data: { session } } = await supabaseClient.auth.getSession();
+  currentSession = session;
+  if (!session) {
+    isAdmin = false; setSignedInUI(false);
+    status("Sign in with the email/password account you created in Supabase Authentication.");
+    await loadPublicItems();
+    return;
+  }
+  const { data: adminResult, error } = await supabaseClient.rpc("is_djazair_admin");
+  if (error || adminResult !== true) {
+    isAdmin = false;
+    $("loginForm").hidden = false;
+    $("loginButton").hidden = true;
+    $("logoutButton").hidden = false;
+    $("adminTools").hidden = true;
+    status("This account is signed in but is not authorized as a Djazair admin. Add its user ID to public.djazair_admins in Supabase.");
+    await loadPublicItems();
+    return;
+  }
+  isAdmin = true; setSignedInUI(true);
+  status("Admin signed in. You can manage Djazair content.");
+  await loadAdminItems();
+}
+function clearForm() {
+  selectedId = null; uploadFile = null; currentImageUrl = "";
+  ["fName","fRegion","fImage","fDescription","fDetail"].forEach(id => $(id).value = "");
+  $("fCategory").value = "food"; $("fUpload").value = "";
+  $("preview").style.display = "none"; $("applyItem").textContent = "Add item";
+  $("deleteItem").disabled = true;
+}
+function editItem(id) {
+  const x = items.find(y => y.id === id); if (!x) return;
+  selectedId = id; uploadFile = null; currentImageUrl = x.image || "";
+  $("fName").value = x.name; $("fCategory").value = x.category;
+  $("fRegion").value = x.region; $("fImage").value = x.image || "";
+  $("fDescription").value = x.description; $("fDetail").value = x.detail;
+  $("fUpload").value = "";
+  $("preview").style.display = x.image ? "block" : "none"; $("preview").src = x.image || "";
+  $("applyItem").textContent = "Update item"; $("deleteItem").disabled = false;
+  $("admin").scrollIntoView({behavior:"smooth"});
+}
+async function uploadImageIfNeeded() {
+  if (!uploadFile) return currentImageUrl || $("fImage").value.trim();
+  const safeName = uploadFile.name.toLowerCase().replace(/[^a-z0-9._-]+/g,"-");
+  const path = `${crypto.randomUUID()}-${safeName}`;
+  const { error } = await supabaseClient.storage.from(IMAGE_BUCKET).upload(path, uploadFile, {
+    cacheControl:"3600", upsert:false, contentType:uploadFile.type
+  });
+  if (error) throw error;
+  const { data } = supabaseClient.storage.from(IMAGE_BUCKET).getPublicUrl(path);
+  return data.publicUrl;
+}
+async function saveItem() {
+  if (!isAdmin) { notice("Please sign in as an authorized admin first."); return; }
+  const name = $("fName").value.trim();
+  if (!name) { notice("Please enter an item name."); return; }
+  const previous = items.find(x => x.id === selectedId);
+  try {
+    notice("Saving to Supabase...");
+    const image_url = await uploadImageIfNeeded();
+    const record = {
+      title:name, category:dbCategory($("fCategory").value),
+      region:$("fRegion").value.trim() || "Algeria",
+      image_url:image_url || null,
+      description:$("fDescription").value.trim(),
+      detail:$("fDetail").value.trim(),
+      published: previous ? previous.published : true
+    };
+    let result;
+    if (selectedId) {
+      result = await supabaseClient.from("djazair_items").update(record).eq("id",selectedId).select().single();
+    } else {
+      result = await supabaseClient.from("djazair_items").insert(record).select().single();
+    }
+    if (result.error) throw result.error;
+    notice("Saved successfully to Supabase.");
+    clearForm(); await loadAdminItems();
+  } catch (e) {
+    console.error(e);
+    notice("Save failed: " + (e.message || "check your table columns, admin authorization, and Storage policies."));
+  }
+}
+async function deleteItem(id) {
+  const x = items.find(y => y.id === id);
+  if (!x || !confirm("Delete " + x.name + " from the online collection?")) return;
+  const { error } = await supabaseClient.from("djazair_items").delete().eq("id",id);
+  if (error) { notice("Delete failed: " + error.message); return; }
+  if (selectedId === id) clearForm();
+  notice("Item deleted from Supabase."); await loadAdminItems();
+}
+
+document.querySelectorAll("[data-filter]").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll("[data-filter]").forEach(x => x.classList.toggle("active",x===b)); render();
+}));
+$("search").addEventListener("input",render);
+$("adminSearch").addEventListener("input",render);
+$("menu").onclick = () => { const n=$("nav"); n.classList.toggle("open"); $("menu").setAttribute("aria-expanded",n.classList.contains("open")); };
+document.querySelectorAll("#nav a").forEach(a => a.addEventListener("click",()=>$("nav").classList.remove("open")));
+if ($("adminButton")) $("adminButton").onclick = () => { $("admin").classList.add("open"); $("admin").scrollIntoView({behavior:"smooth"}); };
+$("closeAdmin").onclick = () => $("admin").classList.remove("open");
+$("newItem").onclick = clearForm; $("clearForm").onclick = clearForm;
+$("fImage").addEventListener("input", () => {
+  uploadFile=null; currentImageUrl=$("fImage").value.trim();
+  const p=$("preview"); p.src=currentImageUrl; p.style.display=currentImageUrl?"block":"none";
+});
+$("fUpload").addEventListener("change", e => {
+  const file=e.target.files[0]; if(!file)return;
+  if(!file.type.startsWith("image/")) { notice("Please choose an image file."); e.target.value=""; return; }
+  if(file.size>5*1024*1024) { notice("Please choose an image under 5 MB."); e.target.value=""; return; }
+  uploadFile=file; currentImageUrl="";
+  const p=$("preview"); p.src=URL.createObjectURL(file); p.style.display="block";
+  $("fImage").value="";
+});
+$("applyItem").onclick = saveItem;
+$("deleteItem").onclick = () => selectedId && deleteItem(selectedId);
+document.addEventListener("click", e => {
+  const edit=e.target.closest("[data-edit]"), del=e.target.closest("[data-delete]"), detail=e.target.closest("[data-detail]");
+  if(edit && isAdmin) editItem(edit.dataset.edit);
+  if(del && isAdmin) deleteItem(del.dataset.delete);
+  if(detail) {
+    const x=items.find(y=>y.id===detail.dataset.detail); if(!x)return;
+    $("detailImage").src=x.image||""; $("detailImage").style.display=x.image?"block":"none";
+    $("detailTitle").textContent=x.name; $("detailText").textContent=x.detail || x.description;
+    $("detailRegion").textContent="Region: "+(x.region||"Algeria");
+    $("detailCategory").textContent=labels[dbCategory(x.category)] || x.category;
+    $("detailModal").classList.add("open");
+  }
+});
+$("closeDetail").onclick = () => $("detailModal").classList.remove("open");
+$("detailModal").onclick = e => { if(e.target.id==="detailModal") e.currentTarget.classList.remove("open"); };
+$("saveAll").onclick = () => notice("Each item is saved to Supabase when you click Add item or Update item.");
+$("exportData").onclick = () => {
+  const blob=new Blob([JSON.stringify(items,null,2)],{type:"application/json"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="djazair-backup.json"; a.click();
+  URL.revokeObjectURL(a.href); notice("A backup of the currently loaded items was downloaded.");
+};
+$("importButton").onclick = () => notice("Bulk import is disabled in this secure version. Add items through the admin form.");
+$("resetData").onclick = () => notice("Reset is disabled to protect your online database. Delete or edit individual items instead.");
+$("loginButton").onclick = async () => {
+  if(!supabaseClient) { status("Setup needed: paste your Supabase Project URL and Publishable key into this file first."); return; }
+  const email=$("adminEmail").value.trim(), password=$("adminPassword").value;
+  if(!email || !password) { status("Enter your admin email and password."); return; }
+  $("loginButton").disabled=true;
+  const { error } = await supabaseClient.auth.signInWithPassword({email,password});
+  $("loginButton").disabled=false;
+  if(error) { status("Sign-in failed: "+error.message); return; }
+  $("adminPassword").value="";
+  await checkSession();
+};
+$("logoutButton").onclick = async () => { await supabaseClient.auth.signOut(); currentSession=null; isAdmin=false; setSignedInUI(false); clearForm(); await loadPublicItems(); status("You have signed out."); };
+$("year").textContent = new Date().getFullYear();
+
+// The admin page is separate from the public homepage. Open /admin.html to manage the site.
+if (window.location.pathname.endsWith("/admin.html")) {
+  $("admin").classList.add("open");
+  document.title = "Djazair Admin";
+} else {
+  $("admin").classList.remove("open");
+}
+
+if (!readyConfig()) {
+  status("Setup needed: open this file in a text editor and replace the two Supabase placeholders near the top of the script.");
+  $("adminTools").hidden=true;
+  render();
+} else if (!window.supabase) {
+  status("Could not load the Supabase library. Check your internet connection.");
+} else {
+  supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  checkSession();
+}
+</script>
+</body>
+</html>
